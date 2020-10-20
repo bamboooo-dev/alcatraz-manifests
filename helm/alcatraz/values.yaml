@@ -4,6 +4,21 @@
 
 replicaCount: 1
 
+api:
+  name: alcatraz-api
+
+  service:
+    name: api
+    type: ClusterIP
+    port: 80
+    targetPort: 8000
+
+  image:
+    repository: alcatrazdev.azurecr.io/alcatraz-api
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
 image:
   repository: nginx
   pullPolicy: IfNotPresent
