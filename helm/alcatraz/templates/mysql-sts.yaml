@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.db.name }}
+spec:
+  serviceName: {{ .Values.db.service.name }}
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.db.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.db.name }}
+    spec:
+      containers:
+      - name: {{ .Values.db.name }}
+        image: {{ .Values.db.image.repository }}
+        imagePullPolicy: {{ .Values.db.image.pullPolicy }}
+        volumeMounts:
+          - mountPath: "/var/lib/mysql"
+            name: {{ .Values.db.volumeClaim.name }}
+        args:
+        - "--default-authentication-plugin=mysql_native_password"
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        ports:
+        - containerPort: {{ .Values.db.service.targetPort }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.db.volumeClaim.name }}
+      spec:
+        accessModes:
+        - {{ .Values.db.volumeClaim.accessModes }}
+        storageClassName: {{ .Values.db.volumeClaim.storageClassName }}
+        resources:
+          requests:
+            storage: {{ .Values.db.volumeClaim.storage }}
