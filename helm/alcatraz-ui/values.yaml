@@ -1,24 +1,8 @@
-# Default values for alcatraz.
+# Default values for alcatraz-ui.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-
-api:
-  name: alcatraz-api
-
-  service:
-    name: api
-    type: ClusterIP
-    port: 80
-    targetPort: 8000
-
-  image:
-    repository: alcatrazdev.azurecr.io/alcatraz-api
-    pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: "0.1.0"
-    imagePullSecrets: acr-credential
 
 ui:
   name: alcatraz-ui
@@ -35,26 +19,6 @@ ui:
     # Overrides the image tag whose default is the chart appVersion.
     tag: "0.1.0"
     imagePullSecrets: acr-credential
-
-db:
-  name: mysql
-
-  service:
-    name: db
-    type: ClusterIP
-    port: 3306
-    targetPort: 3306
-
-  image:
-    repository: mysql:8.0
-    pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
-
-  volumeClaim:
-    name: mysql-data
-    accessModes: ReadWriteOnce
-    storageClassName: default
-    storage: 5Gi
 
 image:
   repository: nginx
