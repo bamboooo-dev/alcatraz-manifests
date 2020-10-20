@@ -17,7 +17,44 @@ api:
     repository: alcatrazdev.azurecr.io/alcatraz-api
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+    tag: "0.1.0"
+    imagePullSecrets: acr-credential
+
+ui:
+  name: alcatraz-ui
+
+  service:
+    name: ui
+    type: NodePort
+    port: 80
+    targetPort: 3000
+
+  image:
+    repository: alcatrazdev.azurecr.io/alcatraz-ui
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "0.1.0"
+    imagePullSecrets: acr-credential
+
+db:
+  name: mysql
+
+  service:
+    name: db
+    type: ClusterIP
+    port: 3306
+    targetPort: 3306
+
+  image:
+    repository: mysql:8.0
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+
+  volumeClaim:
+    name: mysql-data
+    accessModes: ReadWriteOnce
+    storageClassName: default
+    storage: 5Gi
 
 image:
   repository: nginx
