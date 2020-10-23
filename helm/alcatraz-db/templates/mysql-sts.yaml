@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.db.name }}
 spec:
   serviceName: {{ .Values.db.service.name }}
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: {{ .Values.db.name }}
