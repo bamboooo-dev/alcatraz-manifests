@@ -51,8 +51,6 @@ spec:
               port: 8000
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      imagePullSecrets:
-        - name: {{ .Values.api.image.imagePullSecrets }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

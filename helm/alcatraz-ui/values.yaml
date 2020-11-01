@@ -14,11 +14,11 @@ ui:
     targetPort: 3000
 
   image:
-    repository: alcatrazdev.azurecr.io/alcatraz-ui
+    repository: bamboooo/alcatraz-ui
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: "0.1.0"
-    imagePullSecrets: acr-credential
+    # imagePullSecrets: acr-credential
 
 image:
   repository: nginx
