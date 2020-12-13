@@ -19,7 +19,8 @@ spec:
         imagePullPolicy: {{ .Values.db.image.pullPolicy }}
         volumeMounts:
           - mountPath: "/var/lib/mysql"
-            name: {{ .Values.db.volumeClaim.name }}
+            # name: {{ .Values.db.volumeClaim.name }}
+            name: mysql-data
         args:
         - "--default-authentication-plugin=mysql_native_password"
         env:
@@ -27,13 +28,18 @@ spec:
           value: root
         ports:
         - containerPort: {{ .Values.db.service.targetPort }}
-  volumeClaimTemplates:
-    - metadata:
-        name: {{ .Values.db.volumeClaim.name }}
-      spec:
-        accessModes:
-        - {{ .Values.db.volumeClaim.accessModes }}
-        storageClassName: {{ .Values.db.volumeClaim.storageClassName }}
-        resources:
-          requests:
-            storage: {{ .Values.db.volumeClaim.storage }}
+      volumes:
+        - name: mysql-data
+          hostPath:
+            path: /var/lib/mysql
+            type: DirectoryOrCreate
+  # volumeClaimTemplates:
+  #   - metadata:
+  #       name: {{ .Values.db.volumeClaim.name }}
+  #     spec:
+  #       accessModes:
+  #       - {{ .Values.db.volumeClaim.accessModes }}
+  #       storageClassName: {{ .Values.db.volumeClaim.storageClassName }}
+  #       resources:
+  #         requests:
+  #           storage: {{ .Values.db.volumeClaim.storage }}
