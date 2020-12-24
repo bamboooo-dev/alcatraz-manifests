@@ -17,7 +17,7 @@ api:
     repository: bamboooo/alcatraz-api
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "0.1.0"
+    tag: latest
     # imagePullSecrets: acr-credential
 
 image:
